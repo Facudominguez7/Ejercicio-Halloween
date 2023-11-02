@@ -25,7 +25,7 @@ if (isset($_POST['nombre']) && isset($_POST['descripcion'])) {
         <label for="disfraz-nombre">Nombre del Disfraz:</label>
         <input type="text" id="nombre" name="nombre" required>
 
-        <label for="disfraz-descripcion">Descripción del Disfraz:</label>
+        <label for="disfraz-descripcion">Descripción del Disfrazz:</label>
         <textarea id="descripcion" name="descripcion" required></textarea>
 
         <label for="disfraz-nombre">Foto:</label>
