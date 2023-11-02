@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('includes/conexion.php');
 conectar();
 ?>
@@ -19,10 +20,20 @@ conectar();
             <li><a href="index.php?modulo=procesar_registro">Registro</a></li>
             <li><a href="index.php?modulo=procesar_login">Iniciar Sesión</a></li>
             <li><a href="index.php?modulo=procesar_disfraz">Panel de Administración</a></li>
+
+
         </ul>
     </nav>
     <header>
         <h1>Concurso de disfraces de Halloween</h1>
+        <?php
+        if (!empty($_SESSION['nombre_usuario'])) {
+        ?>
+            <p>Bienvenido <?php echo $_SESSION['nombre_usuario']; ?></p>
+            <a href="index.php?modulo=procesar_login&salir=ok">Cerrar Sesión</a>
+        <?php
+        }
+        ?>
     </header>
     <main>
         <?php
@@ -42,7 +53,19 @@ conectar();
                             <p>Votos: <?php echo $r['votos']; ?></p>
                             <p><?php echo $r['descripcion']; ?></p>
                             <p><img src="imagenes/<?php echo $r['foto']; ?>" width="100%"></p>
-                            <button class="votar">Votar</button>
+                            <?php
+                            if (!empty($_SESSION['nombre_usuario'])) {
+                                $sql_votos = "SELECT * FROM votos WHERE id_disfraz=" . $r['id'] . " and
+                                id_usuario="  . $_SESSION['id'];
+                                $sql_votos = mysqli_query($con, $sql_votos);
+                                if (mysqli_num_rows($sql_votos) == 0) {
+                            ?>
+                                    <button class="votar">Votar</button>
+                            <?php
+                                }
+                            }
+                            ?>
+
                         </div>
                         <!-- Repite la estructura para más disfraces -->
                     </section>

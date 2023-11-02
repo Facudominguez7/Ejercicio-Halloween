@@ -1,12 +1,19 @@
 <?php
 if (isset($_POST['nombre']) && isset($_POST['descripcion'])) {
-    echo $sql = "INSERT INTO disfraces (nombre, descripcion) values ('" . $_POST['nombre'] . "', '" . $_POST['descripcion'] . "')";
+    $sql = "SELECT * FROM disfraces WHERE nombre = '" . $_POST['nombre'] . "'";
     $sql = mysqli_query($con, $sql);
-    if (mysqli_error($con)) {
-        echo "<script>alert('Error no se pudo insertar el registro');</script>";
+    if (mysqli_num_rows($sql) != 0) {
+        echo "<script>alert('Error: Ese nombre ya existe');</script>";
     } else {
-        echo "<script>alert('Registro insertado con exito');</script>";
+        echo $sql = "INSERT INTO disfraces (nombre, descripcion) values ('" . $_POST['nombre'] . "', '" . $_POST['descripcion'] . "')";
+        $sql = mysqli_query($con, $sql);
+        if (mysqli_error($con)) {
+            echo "<script>alert('Error no se pudo insertar el registro');</script>";
+        } else {
+            echo "<script>alert('Registro insertado con exito');</script>";
+        }
     }
+    echo "<script>window.location='index.php?modulo=procesar_registro';</script>";
 }
 
 ?>
@@ -22,7 +29,7 @@ if (isset($_POST['nombre']) && isset($_POST['descripcion'])) {
         <textarea id="descripcion" name="descripcion" required></textarea>
 
         <label for="disfraz-nombre">Foto:</label>
-        <input type="file" id="disfraz-foto" name="disfraz-foto" >
+        <input type="file" id="disfraz-foto" name="disfraz-foto">
 
         <button type="submit">Agregar Disfraz</button>
     </form>
