@@ -52,15 +52,22 @@ conectar();
                             <h1><?php echo $r['nombre']; ?></h1>
                             <p>Votos: <?php echo $r['votos']; ?></p>
                             <p><?php echo $r['descripcion']; ?></p>
-                            <p><img src="imagenes/<?php echo $r['foto']; ?>" width="100%"></p>
+                            
                             <?php
+                            if(file_exists('imagenes/'.$r['foto'])){
+                                ?>  
+                                    <p><img src="imagenes/<?php echo $r['foto']; ?>" width="100%"></p>
+                                    <p>FOTO BLOB</p>
+                                    <p><img src="modulos/mostrar_foto.php?id=<?php echo $r['id']?>"width="100%"></p>
+                                <?php
+                            }
                             if (!empty($_SESSION['nombre_usuario'])) {
                                 $sql_votos = "SELECT * FROM votos WHERE id_disfraz=" . $r['id'] . " and
                                 id_usuario="  . $_SESSION['id'];
                                 $sql_votos = mysqli_query($con, $sql_votos);
                                 if (mysqli_num_rows($sql_votos) == 0) {
                             ?>
-                                    <button class="votar">Votar</button>
+                                    <button class="votar" id="votarBoton<?php echo $r['id']; ?>" onclick="votar(<?php echo $r['id']; ?>)">Votar </button>
                             <?php
                                 }
                             }
