@@ -7,7 +7,6 @@ if (isset($_POST["nombre"]) && isset($_POST["descripcion"]) && isset($_GET['guar
     if (mysqli_num_rows($sql) != 0) {
         echo "<script> alert('EL DISFRAZ YA EXISTE EN LA BD');</script>";
     } else {
-
         //procesar la foto
         if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
             $nombre = explode('.', $_FILES['foto']['name']);
@@ -18,7 +17,6 @@ if (isset($_POST["nombre"]) && isset($_POST["descripcion"]) && isset($_GET['guar
             $imgContenido = addslashes(file_get_contents($image));
         }
         //fin de procesar la foto
-
 
         //inserto nuevo disfraz
         $sql = "INSERT INTO disfraces (nombre,descripcion, votos,foto,foto_blob) values ('{$_POST['nombre']}','{$_POST['descripcion']}',0,'{$foto}','{$imgContenido}')";
